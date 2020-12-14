@@ -1,33 +1,54 @@
-apiVersion: apps/v1beta #  for k8s versions before 1.9.0 use apps/v1beta2  and before 1.8.0 use extensions/v1beta1
+apiVersion: apps/v1 #  for k8s versions before 1.9.0 use apps/v1beta2  and before 1.8.0 use extensions/v1beta1
 kind: StatefulSet
 metadata:
   name: minio
-  namespace: velero
+  labels:
+     app: minio
 spec:
+  selector:
+    matchLabels:
+      app: minio
   serviceName: minio
   replicas: 4
+  selector:
+    matchLabels:
+      app: minio
   template:
     metadata:
       labels:
         app: minio
     spec:
-      volumes:
-      - name: data
-        persistentVolumeClaim:
-          claimName: minio-storage-claim
       containers:
       - name: minio
         env:
-        - name: MINIO_ACCESS_KEY                  ## velero 연동 시 사용되는 정보
+        - name: MINIO_ACCESS_KEY
           value: "minio"
         - name: MINIO_SECRET_KEY
           value: "minio123"
         image: minio/minio:latest
         args:
-        - server 
-        - http://minio-{0...3}.minio.velero.svc.cluster.local/data   # 4대의 분산 노드와 통신하기 위한 service 내부 도메인 / 도메인 뒤에 url 경로는 volume 매핑되는 폴더 경로
+        - server
+        - http://minio-0.minio.default.svc.cluster.local/data
+        - http://minio-1.minio.default.svc.cluster.local/data
+        - http://minio-2.minio.default.svc.cluster.local/data
+        - http://minio-3.minio.default.svc.cluster.local/data
         ports:
         - containerPort: 9000
+          hostPort: 9000
+        # These volume mounts are persistent. Each pod in the StatefulSet
+        # gets a volume mounted based on this field.
         volumeMounts:
         - name: data
           mountPath: /data
+  # These are converted to volume claims by the controller
+  # and mounted at the paths mentioned above.
+  volumeClaimTemplates:
+  - metadata:
+      name: data
+    spec:
+      accessModes:
+        - ReadWriteMany
+      storageClassName: standard
+      resources:
+        requests:
+          storage: 10Gi
