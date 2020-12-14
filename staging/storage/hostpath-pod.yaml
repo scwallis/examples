@@ -1,28 +1,16 @@
 apiVersion: v1
-kind: Deployment
+kind: Pod
 metadata:
-  name: nginx-deployment
-  labels:
-    app: nginx-label
- 
+  name: hostpath-pod
 spec:
-  selector:
-    matchLabels:
-      app: nginx-label
- 
-  template:
-    metadata:
-      labels:
-        app: nginx-label
-    spec:
-      containers:
-        - name: nginx-container
-          image: nginx
-          volumeMounts:
-            - mountPath: /mydata-container
-              name: my-hostpath-volume
-      volumes:
-        - name: my-hostpath-volume
-          hostPath:
-            path: /home/scwallis2020/data
-
+  containers:
+    - name: my-container
+      image: busybox
+      args: ["tail", "-f", "/dev/null"]
+      volumMounts: 
+      - name: my-hostpath-volume
+        mountPath: /etc/data
+  volumes: 
+    - name: my-hostpath-volume
+      hostPath: 
+        path: /tmp
