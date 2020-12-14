@@ -40,11 +40,15 @@ spec:
         volumeMounts:
         - name: data
           mountPath: /data
-      # These are converted to volume claims by the controller
-      # and mounted at the paths mentioned above.
-      volumes:
-      - name: data
-        hostPath:
-          # Name of the PVC created earlier
-          path: /tmp/storage
-          type: Directory
+  # These are converted to volume claims by the controller
+  # and mounted at the paths mentioned above.
+  volumeClaimTemplates:
+  - metadata:
+      name: data
+    spec:
+      accessModes:
+        - ReadWriteOnce
+      storageClassName: local-storage
+      resources:
+        requests:
+          storage: 10Gi
