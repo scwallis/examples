@@ -42,13 +42,8 @@ spec:
           mountPath: /data
   # These are converted to volume claims by the controller
   # and mounted at the paths mentioned above.
-  volumeClaimTemplates:
-  - metadata:
-      name: data
-    spec:
-      accessModes:
-        - ReadWriteOnce
-      storageClassName: standard
-      resources:
-        requests:
-          storage: 10Gi
+  volumes:
+  - name: data
+    hostPath:
+      # Name of the PVC created earlier
+      path: /tmp/storage
