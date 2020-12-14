@@ -18,20 +18,21 @@ spec:
       labels:
         app: minio
     spec:
+      volumes:
+      - name: data
+        persistentVolumeClaim:
+          claimName: minio-local-volume-claim
       containers:
       - name: minio
         env:
-        - name: MINIO_ACCESS_KEY
+        - name: MINIO_ACCESS_KEY                  ## velero 연동 시 사용되는 정보
           value: "minio"
         - name: MINIO_SECRET_KEY
           value: "minio123"
         image: minio/minio:latest
         args:
         - server
-        - http://minio-0.minio.default.svc.cluster.local/data
-        - http://minio-1.minio.default.svc.cluster.local/data
-        - http://minio-2.minio.default.svc.cluster.local/data
-        - http://minio-3.minio.default.svc.cluster.local/data
+        - http://minio-{0...3}.minio.default.svc.cluster.local/data
         ports:
         - containerPort: 9000
           hostPort: 9000
@@ -40,15 +41,3 @@ spec:
         volumeMounts:
         - name: data
           mountPath: /data
-  # These are converted to volume claims by the controller
-  # and mounted at the paths mentioned above.
-  volumeClaimTemplates:
-  - metadata:
-      name: data
-    spec:
-      accessModes:
-        - ReadWriteMany
-      storageClassName: standard
-      resources:
-        requests:
-          storage: 10Gi
