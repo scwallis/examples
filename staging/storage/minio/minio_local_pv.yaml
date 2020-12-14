@@ -23,3 +23,5 @@ spec:
           - "minio-1"
           - "minio-2" 
           - "minio-3" 
+  claimRef:
+    name: minio-local-volume-claim
