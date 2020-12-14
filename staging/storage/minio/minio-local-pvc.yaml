@@ -2,9 +2,7 @@ apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
   # This name uniquely identifies the PVC. Will be used in deployment below.
-  name: minio-pv-claim
-  labels:
-    app: minio-storage-claim
+  name: minio-local-volume-claim
 spec:
   # Read more about access modes here: http://kubernetes.io/docs/user-guide/persistent-volumes/#access-modes
   accessModes:
