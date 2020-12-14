@@ -11,11 +11,12 @@ spec:
         - mountPath: /data
           name: my-empty-volume
         
-        - image: nginx
-          name: nginx-containe
-          volumeMounts: 
-            - mountPath: /data
-              name: my-empty-volume
+    - image: nginx
+      name: nginx-containe
+      volumeMounts: 
+        - mountPath: /data
+          name: my-empty-volume
+
   volumes:
     - name: my-empty-volume
       emptyDir: {}
