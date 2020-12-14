@@ -14,7 +14,7 @@ spec:
       volumes:
       - name: data
         persistentVolumeClaim:
-          claimName: minio-local-volume-claim
+          claimName: minio-storage-claim
       containers:
       - name: minio
         env:
