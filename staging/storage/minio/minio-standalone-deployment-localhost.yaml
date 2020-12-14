@@ -18,9 +18,9 @@ spec:
       # Refer to the PVC created earlier
       volumes:
       - name: storage
-        persistentVolumeClaim:
+        hostPath:
           # Name of the PVC created earlier
-          claimName: minio-pv-claim
+          path: /tmp/storage
       containers:
       - name: minio
         # Pulls the default Minio image from Docker Hub
