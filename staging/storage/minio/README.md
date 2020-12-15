@@ -199,6 +199,7 @@ This example uses following core components of Kubernetes:
 Run the below commands to get started quickly
 
 ```sh
+kubectl create -f https://raw.githubusercontent.com/scwallis/examples/master/staging/storage/minio/minio-distributed-persistent-volume.yaml
 kubectl create -f https://raw.githubusercontent.com/scwallis/examples/master/staging/storage/minio/minio-distributed-headless-service.yaml
 kubectl create -f https://raw.githubusercontent.com/scwallis/examples/master/staging/storage/minio/minio-distributed-statefulset.yaml
 kubectl create -f https://raw.githubusercontent.com/scwallis/examples/master/staging/storage/minio/minio-distributed-service.yaml
