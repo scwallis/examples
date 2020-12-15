@@ -22,3 +22,78 @@ spec:
           - "gke-minio-default-pool-797ea640-0vfc"          
           - "gke-minio-default-pool-797ea640-0vfc"          
           - "gke-minio-default-pool-797ea640-0vfc"                    
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: "local-pv1"
+spec:
+  capacity:
+    storage: 10Gi
+  accessModes:
+  - "ReadWriteOnce"
+  persistentVolumeReclaimPolicy: "Retain"
+  storageClassName: "local-storage"
+  local:
+    path: "/home/scwallis2020/data"
+  nodeAffinity:
+    required:
+      nodeSelectorTerms:
+      - matchExpressions:
+        - key: "kubernetes.io/hostname"
+          operator: "In"
+          values:
+          - "gke-minio-default-pool-797ea640-0vfc"
+          - "gke-minio-default-pool-797ea640-0vfc"          
+          - "gke-minio-default-pool-797ea640-0vfc"          
+          - "gke-minio-default-pool-797ea640-0vfc"          
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: "local-pv2"
+spec:
+  capacity:
+    storage: 10Gi
+  accessModes:
+  - "ReadWriteOnce"
+  persistentVolumeReclaimPolicy: "Retain"
+  storageClassName: "local-storage"
+  local:
+    path: "/home/scwallis2020/data"
+  nodeAffinity:
+    required:
+      nodeSelectorTerms:
+      - matchExpressions:
+        - key: "kubernetes.io/hostname"
+          operator: "In"
+          values:
+          - "gke-minio-default-pool-797ea640-0vfc"
+          - "gke-minio-default-pool-797ea640-0vfc"          
+          - "gke-minio-default-pool-797ea640-0vfc"          
+          - "gke-minio-default-pool-797ea640-0vfc"          
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: "local-pv3"
+spec:
+  capacity:
+    storage: 10Gi
+  accessModes:
+  - "ReadWriteOnce"
+  persistentVolumeReclaimPolicy: "Retain"
+  storageClassName: "local-storage"
+  local:
+    path: "/home/scwallis2020/data"
+  nodeAffinity:
+    required:
+      nodeSelectorTerms:
+      - matchExpressions:
+        - key: "kubernetes.io/hostname"
+          operator: "In"
+          values:
+          - "gke-minio-default-pool-797ea640-0vfc"
+          - "gke-minio-default-pool-797ea640-0vfc"          
+          - "gke-minio-default-pool-797ea640-0vfc"          
+          - "gke-minio-default-pool-797ea640-0vfc"          
