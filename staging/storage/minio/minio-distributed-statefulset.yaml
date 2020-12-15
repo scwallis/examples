@@ -48,7 +48,7 @@ spec:
     spec:
       accessModes:
         - ReadWriteOnce
-      storageClassName: standard
+      storageClassName: local-storage
       resources:
         requests:
           storage: 10Gi
